@@ -46,6 +46,15 @@ int delayVal = 100;
 
 uint8_t val = 0;
 
+unsigned long m_w = 1;
+unsigned long m_z = 2; 
+
+unsigned long getRandom() {
+    m_z = 36969L * (m_z & 65535L) + (m_z >> 16);
+    m_w = 18000L * (m_w & 65535L) + (m_w >> 16);
+    return (m_z << 16) + m_w;  /* 32-bit result */
+}
+
 int main() {
   init();
   
@@ -53,8 +62,8 @@ int main() {
   
   for(;;) {
     val += step;
-    delayVal = val == 254 ? 10000 : 100;
-    delayVal = val == 0 ? 4000 : delayVal; 
+    delayVal = val == 254 ? getRandom() : 10;
+    delayVal = val == 0 ? getRandom() / 20 : delayVal; 
     compbuff[0] = val;
     delay_ms(delayVal);
   }
