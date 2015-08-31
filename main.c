@@ -63,7 +63,7 @@ int main() {
   for(;;) {
     val += step;
     delayVal = val == 254 ? getRandom() : 10;
-    delayVal = val == 0 ? getRandom() / 20 : delayVal; 
+    delayVal = val == 0 ? 500 : delayVal; 
     compbuff[0] = val;
     delay_ms(delayVal);
   }
