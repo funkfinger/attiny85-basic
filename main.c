@@ -23,7 +23,7 @@
 #define CHMAX 1 // maximum number of PWM channels
 #define PWMDEFAULT 0x00 // default PWM value at start up for all channels
 
-#define EYE_CLEAR (pinlevelB &= ~(1 << EYE)) // map EYE to PB0
+#define EYES_CLEAR (pinlevelB &= ~(1 << EYES)) // map EYES to PB0
 // #define GREEN_CLEAR (pinlevelB &= ~(1 << GREEN)) // map GREEN to PB1
 // #define BLUE_CLEAR (pinlevelB &= ~(1 << BLUE)) // map BLUE to PB2
 
@@ -34,7 +34,7 @@
 #define clr(x) &=~(1<<x) 
 #define inv(x) ^=(1<<x)
 
-#define EYE PB0
+#define EYES PB1
 #define LED_DDR DDRB
 
 void delay_ms(uint16_t ms);
@@ -79,7 +79,7 @@ void delay_ms(uint16_t ms) {
 
 void init(void) {
   // set the direction of the ports
-  LED_DDR set(EYE);
+  LED_DDR set(EYES);
   
   unsigned char i, pwm;
 
@@ -115,6 +115,6 @@ ISR (TIM0_OVF_vect) {
     pinlevelB = PORTB_MASK;     // set all port pins high
   }
   // clear port pin on compare match (executed on next interrupt)
-  if(compare[0] == softcount) EYE_CLEAR;
+  if(compare[0] == softcount) EYES_CLEAR;
 
 }
